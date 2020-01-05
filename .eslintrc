@@ -20,6 +20,14 @@
     "parser": "babel-eslint",
     "plugins": ["react", "jsx-a11y", "import"],
     "rules": {
+        "react/jsx-props-no-spreading": [
+            {
+                "html": "ignore",
+                "custom": "ignore",
+                "explicitSpread": "ignore",
+                "exceptions": []
+            }
+        ],
         "import/prefer-default-export": "off",
         "react/jsx-filename-extension": 0,
         "array-bracket-spacing": 2,
