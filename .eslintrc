@@ -20,6 +20,7 @@
     "parser": "babel-eslint",
     "plugins": ["react", "jsx-a11y", "import"],
     "rules": {
+        "import/prefer-default-export": "off",
         "react/jsx-filename-extension": 0,
         "array-bracket-spacing": 2,
         "arrow-body-style": 0,
@@ -152,7 +153,7 @@
         "quote-props": 0,
         "quotes": [2, "single", "avoid-escape"],
         "radix": 2,
-        "jsx-quotes": [2, "prefer-single"],
+        "jsx-quotes": [2, "prefer-double"],
         "jsx-a11y/click-events-have-key-events": 0,
         "jsx-a11y/no-noninteractive-element-interactions": 0,
         "jsx-a11y/media-has-caption": 0,
