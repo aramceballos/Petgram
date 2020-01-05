@@ -1,4 +1,4 @@
 import React from 'react';
-import { Category } from './Components/Category/index';
+import { ListOfCategories } from './components/ListOfCategories';
 
-export const App = () => <Category />;
+export const App = () => <ListOfCategories />;
