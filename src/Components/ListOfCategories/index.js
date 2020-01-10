@@ -4,6 +4,7 @@ import { List, Item } from './styles';
 
 export const ListOfCategories = () => {
   const [categories, setCategories] = useState([]);
+  const [showFixed, setShowFixed] = useState(false);
 
   useEffect(function() {
     fetch('https://petgram-server-cyzd2zjsl.now.sh/categories')
@@ -13,13 +14,31 @@ export const ListOfCategories = () => {
       });
   }, []);
 
-  return (
-    <List>
+  useEffect(function() {
+    const onScroll = (e) => {
+      const newShowFixed = window.scrollY > 200;
+      showFixed !== newShowFixed && setShowFixed(newShowFixed);
+    };
+
+    document.addEventListener('scroll', onScroll);
+
+    return () => document.removeEventListener('scroll', onScroll);
+  }, []);
+
+  const renderList = (fixed) => (
+    <List className={fixed ? 'fixed' : ''}>
       {categories.map((category) => (
         <Item key={category.id}>
           <Category {...category} />
         </Item>
       ))}
     </List>
+  );
+
+  return (
+    <>
+      {renderList()}
+      {showFixed && renderList(true)}
+    </>
   );
 };
