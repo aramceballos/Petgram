@@ -10,7 +10,22 @@ to {
   opacity: 1;
 }
 `;
+
+const appearListKeyframes = keyframes`
+  from {
+    top: -365px
+  };
+  to {
+    top: -20px
+  }
+`;
+
 export const fadeIn = ({ time = '1s', type = 'ease' } = {}) =>
   css`
     animation: ${time} ${fadeInKeyframes} ${type};
+  `;
+
+export const appearList = ({ time = '1s', type = 'ease' } = {}) =>
+  css`
+    animation: ${time} ${appearListKeyframes} ${type};
   `;
