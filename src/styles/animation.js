@@ -13,7 +13,7 @@ to {
 
 const appearListKeyframes = keyframes`
   from {
-    top: -365px
+    top: -150px
   };
   to {
     top: -20px
