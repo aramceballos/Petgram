@@ -9,7 +9,7 @@ export const List = styled.ul`
   ${(props) =>
     props.fixed &&
     css`
-      ${appearList({ time: '.5s' })}
+      ${appearList({ time: '.5s', type: 'ease-in-out' })}
       background-color: #fff;
       border-radius: 60px;
       box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
