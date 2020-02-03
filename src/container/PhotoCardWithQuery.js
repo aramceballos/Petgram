@@ -22,7 +22,6 @@ export const PhotoCardWithQuery = ({ id }) => (
     {({ loading, error, data }) => {
       if (loading) return null;
       const { photo = {} } = data;
-      console.log(photo);
       return <PhotoCard {...photo} />;
     }}
   </Query>
