@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Category } from '../Category';
 import { List, Item } from './styles';
-import { ThreeHorseLoading } from 'react-loadingg';
 
 function useCategoriesData() {
   const [categories, setCategories] = useState([]);
@@ -55,7 +54,7 @@ export const ListOfCategories = () => {
   );
 
   if (loading) {
-    return <ThreeHorseLoading />;
+    return <p>Loading...</p>;
   }
 
   return (

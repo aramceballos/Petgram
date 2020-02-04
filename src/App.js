@@ -18,7 +18,7 @@ export const App = () => {
       ) : (
         <>
           <ListOfCategories />
-          <ListOfPhotoCards categoryId={3} />
+          <ListOfPhotoCards categoryId={1} />
         </>
       )}
     </>
