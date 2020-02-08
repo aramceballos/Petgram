@@ -2,8 +2,8 @@ import React from 'react';
 import { Router } from '@reach/router';
 import { GlobalStyle } from './styles/GlobalStyles';
 import { Logo } from './components/Logo';
-import { PhotoCardWithQuery } from './container/PhotoCardWithQuery';
 import { Home } from './pages/Home';
+import { Detail } from './pages/Detail';
 
 export const App = () => {
   const urlParams = new window.URLSearchParams(window.location.search);
@@ -13,14 +13,11 @@ export const App = () => {
     <>
       <Logo />
       <GlobalStyle />
-      {detailId ? (
-        <PhotoCardWithQuery id={detailId} />
-      ) : (
-        <Router>
-          <Home path="/" />
-          <Home path="/pet/:id" />
-        </Router>
-      )}
+      <Router>
+        <Home path="/" />
+        <Home path="/pet/:categoryId" />
+        <Detail path="/detail/:detailId" />
+      </Router>
     </>
   );
 };
