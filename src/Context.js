@@ -7,7 +7,7 @@ const Provider = ({ children }) => {
 
   const value = {
     isAuth,
-    activate: () => setIsAuth(true),
+    activateAuth: () => setIsAuth(true),
   };
 
   return <Context.Provider value={value}>{children}</Context.Provider>;
