@@ -1,14 +1,5 @@
 import React, { useState } from 'react';
-
-const useInputValue = (initialValue) => {
-  const [value, setValue] = useState(initialValue);
-
-  const onChange = (e) => {
-    setValue(e.target.value);
-  };
-
-  return { value, onChange };
-};
+import { useInputValue } from '../../hooks/userInputValue';
 
 export const UserForm = ({ onSubmit }) => {
   const email = useInputValue('');
