@@ -5,7 +5,12 @@ import { UserForm } from '../Components/UserForm';
 export const NotRegisteredUser = () => (
   <Context.Consumer>
     {({ activateAuth }) => {
-      return <UserForm onSubmit={activateAuth} />;
+      return (
+        <>
+          <UserForm title="Registrarse" onSubmit={activateAuth} />
+          <UserForm title="Iniciar Sesion" onSubmit={activateAuth} />
+        </>
+      );
     }}
   </Context.Consumer>
 );
