@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useInputValue } from '../../hooks/userInputValue';
 import { Form, Input, Button, Title } from './styles';
 

@@ -2,6 +2,7 @@ import React from 'react';
 import Context from '../Context';
 import { UserForm } from '../Components/UserForm';
 import { RegisterMutation } from '../container/RegisterMutation';
+import { LoginMutation } from '../container/LoginMutation';
 import Alert from '@material-ui/lab/alert';
 
 export const NotRegisteredUser = () => (
@@ -33,7 +34,29 @@ export const NotRegisteredUser = () => (
               );
             }}
           </RegisterMutation>
-          <UserForm title="Iniciar Sesion" onSubmit={activateAuth} />
+
+          <LoginMutation>
+            {(register, { data, loading, error }) => {
+              const onSubmit = ({ email, password }) => {
+                const input = { email, password };
+                const variables = { input };
+                register({ variables }).then(activateAuth);
+              };
+
+              const errorMsg = error && (
+                <Alert severity="error">Email o Contraseña incorrectos</Alert>
+              );
+
+              return (
+                <UserForm
+                  disabled={loading}
+                  error={errorMsg}
+                  title="Iniciar Sesión"
+                  onSubmit={onSubmit}
+                />
+              );
+            }}
+          </LoginMutation>
         </>
       );
     }}
