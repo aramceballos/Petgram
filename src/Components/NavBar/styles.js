@@ -35,7 +35,7 @@ export const Link = styled(LinkRouter)`
       position: absolute;
       bottom: 0;
       font-size: 20px;
-      line-height: 20px;
+      line-height: 15px;
     }
   }
 `;
