@@ -15,7 +15,6 @@ const Provider = ({ children }) => {
     },
     removeAuth: () => {
       window.sessionStorage.removeItem('token');
-      // window.location.href = '/';
       setIsAuth(false);
     },
   };
