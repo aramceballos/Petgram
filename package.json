@@ -3,6 +3,7 @@
     "version": "1.0.0",
     "description": "A social network for your pets",
     "main": "index.js",
+    "homepage": "https://armc7.github.io/Petgram/",
     "scripts": {
         "now-build": "npm run build",
         "build": "webpack",
