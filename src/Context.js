@@ -13,6 +13,11 @@ const Provider = ({ children }) => {
       window.sessionStorage.setItem('token', token);
       setIsAuth(true);
     },
+    removeAuth: () => {
+      window.sessionStorage.removeItem('token');
+      // window.location.href = '/';
+      setIsAuth(false);
+    },
   };
 
   return <Context.Provider value={value}>{children}</Context.Provider>;

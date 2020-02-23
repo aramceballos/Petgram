@@ -22,7 +22,7 @@ export const FavsWithQuery = () => (
       if (error) {
         if (error.message === 'GraphQL error: user does not exist') {
           window.sessionStorage.removeItem('token');
-          window.location.reload;
+          window.location.href = '/';
         }
         return <p>Error...</p>;
       }
