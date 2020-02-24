@@ -4,11 +4,12 @@ import { UserForm } from '../Components/UserForm';
 import { RegisterMutation } from '../container/RegisterMutation';
 import { LoginMutation } from '../container/LoginMutation';
 import Alert from '@material-ui/lab/alert';
+import { Layout } from '../Components/Layout';
 
 export const NotRegisteredUser = () => {
   const { activateAuth } = useContext(Context);
   return (
-    <>
+    <Layout title="Login">
       <RegisterMutation>
         {(register, { data, loading, error }) => {
           const onSubmit = ({ email, password }) => {
@@ -62,6 +63,6 @@ export const NotRegisteredUser = () => {
           );
         }}
       </LoginMutation>
-    </>
+    </Layout>
   );
 };
