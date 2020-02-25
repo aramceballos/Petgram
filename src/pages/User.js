@@ -3,7 +3,7 @@ import { Context } from '../Context';
 import { SubmitButton } from '../Components/SubmitButton';
 import { Layout } from '../Components/Layout';
 
-export const User = () => {
+export default () => {
   const { removeAuth } = useContext(Context);
 
   return (

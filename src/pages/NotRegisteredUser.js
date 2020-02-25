@@ -6,7 +6,7 @@ import { LoginMutation } from '../container/LoginMutation';
 import Alert from '@material-ui/lab/alert';
 import { Layout } from '../Components/Layout';
 
-export const NotRegisteredUser = () => {
+export default () => {
   const { activateAuth } = useContext(Context);
   return (
     <Layout title="Login">

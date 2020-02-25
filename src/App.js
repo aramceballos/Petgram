@@ -1,21 +1,23 @@
-import React, { useContext } from 'react';
+import React, { useContext, Suspense } from 'react';
 import { Router, Redirect } from '@reach/router';
 import { GlobalStyle } from './styles/GlobalStyles';
 import { Logo } from './components/Logo';
-import { Home } from './pages/Home';
-import { Detail } from './pages/Detail';
-import { Favs } from './pages/Favs';
-import { User } from './pages/User';
-import { NotFound } from './pages/NotFound';
-import { NotRegisteredUser } from './pages/NotRegisteredUser';
 import { NavBar } from './components/NavBar';
 import { Context } from './Context';
+import { ThreeHorseLoading } from 'react-loadingg';
+
+const Home = React.lazy(() => import('./pages/Home'));
+const Detail = React.lazy(() => import('./pages/Detail'));
+const Favs = React.lazy(() => import('./pages/Favs'));
+const User = React.lazy(() => import('./pages/User'));
+const NotFound = React.lazy(() => import('./pages/NotFound'));
+const NotRegisteredUser = React.lazy(() => import('./pages/NotRegisteredUser'));
 
 export const App = () => {
   const { isAuth } = useContext(Context);
 
   return (
-    <>
+    <Suspense fallback={<ThreeHorseLoading />}>
       <Logo />
       <GlobalStyle />
       <Router>
@@ -32,6 +34,6 @@ export const App = () => {
       </Router>
 
       <NavBar />
-    </>
+    </Suspense>
   );
 };
