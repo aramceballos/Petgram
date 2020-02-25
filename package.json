@@ -7,7 +7,7 @@
         "now-build": "npm run build",
         "build": "webpack --mode 'production'",
         "serve:dev": "webpack --mode 'development' && npx serve dist -s",
-        "dev": "webpack-dev-server --history-api-fallback --host 0.0.0.0",
+        "dev": "webpack-dev-server --history-api-fallback",
         "lint": "eslint"
     },
     "keywords": [],
