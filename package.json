@@ -6,19 +6,13 @@
     "homepage": "https://armc7.github.io/Petgram/",
     "scripts": {
         "now-build": "npm run build",
-<<<<<<< HEAD
-        "build": "webpack",
-        "dev": "webpack-dev-server --history-api-fallback --host 0.0.0.0",
-        "lint": "eslint",
+        "build": "webpack --mode production",
         "predeploy": "npm run build",
-        "deploy": "gh-pages -d build"
-=======
-        "build": "webpack --mode 'production'",
+        "deploy": "gh-pages -d build",
         "serve:dev": "webpack --mode 'development' && npx serve dist -s",
         "serve:prod": "webpack --mode 'production' && npx serve dist -s",
         "dev": "webpack-dev-server --history-api-fallback",
         "lint": "eslint"
->>>>>>> development
     },
     "keywords": [],
     "author": "",
