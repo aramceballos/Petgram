@@ -1,3 +1,8 @@
 import React from 'react';
+import { Layout } from '../Components/Layout';
 
-export const NotFound = () => <h1>Esta pagina no existe :(</h1>;
+export default () => (
+  <Layout title="Not Found">
+    <h1>Esta pagina no existe :(</h1>
+  </Layout>
+);
