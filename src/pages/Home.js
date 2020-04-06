@@ -1,6 +1,6 @@
 import React from 'react';
-import { ListOfCategories } from '../components/ListOfCategories';
-import { ListOfPhotoCards } from '../container/ListOfPhotoCards';
+import { ListOfCategories } from '../Components/ListOfCategories';
+import { ListOfPhotoCards } from '../container/ListOfPhotocards';
 import { Layout } from '../Components/Layout';
 
 const HomePage = ({ categoryId }) => (

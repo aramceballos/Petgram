@@ -1,8 +1,8 @@
 import React, { useContext, Suspense } from 'react';
 import { Router, Redirect } from '@reach/router';
 import { GlobalStyle } from './styles/GlobalStyles';
-import { Logo } from './components/Logo';
-import { NavBar } from './components/NavBar';
+import { Logo } from './Components/Logo';
+import { NavBar } from './Components/NavBar';
 import { Context } from './Context';
 import { ThreeHorseLoading } from 'react-loadingg';
 

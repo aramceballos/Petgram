@@ -1,5 +1,5 @@
 import React from 'react';
-import { PhotoCard } from '../components/PhotoCard';
+import { PhotoCard } from '../Components/PhotoCard';
 import { ThreeHorseLoading } from 'react-loadingg';
 
 import { gql } from 'apollo-boost';
