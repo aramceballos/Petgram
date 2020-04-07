@@ -3,7 +3,7 @@ import { Context } from '../Context';
 import { UserForm } from '../Components/UserForm';
 import { RegisterMutation } from '../container/RegisterMutation';
 import { LoginMutation } from '../container/LoginMutation';
-import Alert from '@material-ui/lab/alert';
+import { Alert } from '@material-ui/lab';
 import { Layout } from '../Components/Layout';
 
 export default () => {
