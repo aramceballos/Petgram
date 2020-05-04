@@ -12,7 +12,8 @@
         "serve:dev": "webpack --mode 'development' && npx serve dist -s",
         "serve:prod": "webpack --mode 'production' && npx serve dist -s",
         "dev": "webpack-dev-server --history-api-fallback",
-        "lint": "eslint"
+        "lint": "eslint",
+        "start": "webpack-dev-server"
     },
     "keywords": [],
     "author": "",
