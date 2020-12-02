@@ -13,7 +13,7 @@
         "serve:prod": "webpack --mode 'production' && npx serve dist -s",
         "dev": "webpack-dev-server --history-api-fallback",
         "lint": "eslint",
-        "start": "webpack-dev-server"
+        "start": "npx serve dist -s -p 3000"
     },
     "keywords": [],
     "author": "",
