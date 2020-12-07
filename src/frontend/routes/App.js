@@ -9,7 +9,7 @@ import { ThreeHorseLoading } from 'react-loadingg';
 
 import GlobalStyles from '../styles/GlobalStyles';
 import Logo from '../Components/Logo';
-import { NavBar } from '../Components/NavBar';
+import NavBar from '../Components/NavBar';
 import { Context } from '../Context';
 
 import Home from '../pages/Home';

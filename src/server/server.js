@@ -15,6 +15,7 @@ import Context from '../frontend/Context';
 import serverRoutes from '../frontend/routes/serverRoutes';
 import GlobalStyle from '../frontend/styles/GlobalStyles';
 import Logo from '../frontend/Components/Logo';
+import NavBar from '../frontend/Components/NavBar';
 
 dotenv.config();
 
@@ -105,6 +106,7 @@ const renderApp = (req, res) => {
             <Logo />
             <GlobalStyle />
             {renderRoutes(serverRoutes)}
+            <NavBar />
           </StaticRouter>
         </ApolloProvider>
       </Context.Provider>,
