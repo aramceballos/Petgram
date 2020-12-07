@@ -4,3 +4,5 @@ node_modules/
 .now
 CNAME
 .DS_Store
+src/server/public
+.env

@@ -2,7 +2,7 @@ import React from 'react';
 import { FavButton } from '../FavButton';
 import { ToggleLikeMutation } from '../../container/ToggleLikeMutation';
 
-import { Link } from '@reach/router';
+import { Link } from 'react-router-dom';
 
 import { useNearScreen } from '../../hooks/useNearScreen';
 
