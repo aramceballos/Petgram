@@ -1,18 +1,30 @@
-const HtmlWebpackPlugin = require('html-webpack-plugin');
 const WebpackPwaManifestPlugin = require('webpack-pwa-manifest');
 const WorkboxWebpackPlugin = require('workbox-webpack-plugin');
+const webpack = require('webpack');
+
+require('dotenv').config();
 
 const path = require('path');
 
+const isDev = process.env.ENV === 'development';
+
+const entry = ['./src/frontend/index.js'];
+
+isDev &&
+  entry.push(
+    'webpack-hot-middleware/client?path=/__webpack_hmr&timeout=2000&reload=true',
+  );
+
 module.exports = {
+  entry,
+  mode: process.env.ENV,
   output: {
-    filename: 'app.bundle.js',
+    path: path.resolve(__dirname, 'src/server/public'),
+    filename: 'assets/app.js',
     publicPath: '/',
   },
   plugins: [
-    new HtmlWebpackPlugin({
-      template: 'src/index.html',
-    }),
+    isDev ? new webpack.HotModuleReplacementPlugin() : () => {},
     new WebpackPwaManifestPlugin({
       name: 'Petgram - your favorite pets app',
       short_name: 'Petgram',
@@ -23,9 +35,11 @@ module.exports = {
       orientation: 'portrait',
       display: 'standalone',
       start_url: '.',
+      content_security_policy:
+        '[https://petgram-server-cyzd2zjsl.now.sh/graphql]',
       icons: [
         {
-          src: path.resolve('src/assets/icon.png'),
+          src: path.resolve('src/frontend/assets/icon.png'),
           sizes: [96, 128, 192, 256, 384, 512],
         },
       ],
@@ -54,7 +68,7 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.(js|jsx)$/,
+        test: /\.jsx?$/,
         exclude: /node_modules/,
         use: {
           loader: 'babel-loader',
