@@ -6,13 +6,28 @@ const SIZE = '32px';
 
 const NavBar = () => (
   <Nav>
-    <Link to='/'>
+    <Link
+      exact
+      activeStyle={{
+        color: '#000',
+      }}
+      to='/'>
       <MdHome size={SIZE} />
     </Link>
-    <Link to='/favs'>
+    <Link
+      exact
+      activeStyle={{
+        color: '#000',
+      }}
+      to='/favs'>
       <MdFavoriteBorder size={SIZE} />
     </Link>
-    <Link to='/user'>
+    <Link
+      exact
+      activeStyle={{
+        color: '#000',
+      }}
+      to='/user'>
       <MdPersonOutline size={SIZE} />
     </Link>
   </Nav>

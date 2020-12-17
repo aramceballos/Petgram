@@ -1,30 +1,33 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { PhotoCard } from '../Components/PhotoCard';
 import { ThreeHorseLoading } from 'react-loadingg';
 
-import { gql } from 'apollo-boost';
-import { Query } from 'react-apollo';
+const usePhotocardsData = (categoryId) => {
+  const [photo, setPhotocards] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-const query = gql`
-  query getSinglePhoto($id: ID!) {
-    photo(id: $id) {
-      id
-      categoryId
-      src
-      likes
-      userId
-      liked
-    }
-  }
-`;
+  useEffect(() => {
+    setLoading(true);
+    fetch(
+      `http://ec2-13-57-245-72.us-west-1.compute.amazonaws.com/photos/${categoryId}`,
+    )
+      .then((res) => res.json())
+      .then((response) => {
+        setPhotocards(response.data);
+        setLoading(false);
+      });
+  }, []);
 
-export const PhotoCardWithQuery = ({ id }) => (
-  <Query query={query} variables={{ id }}>
-    {({ loading, error, data }) => {
-      if (loading) return <ThreeHorseLoading />;
-      if (error) return <p>Error</p>;
-      const { photo = {} } = data;
-      return <PhotoCard {...photo} />;
-    }}
-  </Query>
-);
+  return { photo, loading };
+};
+
+export const PhotoCardWithQuery = ({ id }) => {
+  const { photo, loading } = usePhotocardsData(id);
+  useEffect(() => {
+    console.log('si');
+  }, []);
+
+  if (loading) return <ThreeHorseLoading />;
+
+  return <PhotoCard {...photo} />;
+};

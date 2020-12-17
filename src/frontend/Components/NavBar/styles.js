@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { Link as LinkRouter } from 'react-router-dom';
+import { NavLink as LinkRouter } from 'react-router-dom';
 
 export const Nav = styled.nav`
   align-items: center;
@@ -26,16 +26,4 @@ export const Link = styled(LinkRouter)`
   justify-content: center;
   text-decoration: none;
   width: 100%;
-
-  &[aria-current] {
-    color: #000;
-
-    &:after {
-      content: '•';
-      position: absolute;
-      bottom: 0;
-      font-size: 20px;
-      line-height: 15px;
-    }
-  }
 `;

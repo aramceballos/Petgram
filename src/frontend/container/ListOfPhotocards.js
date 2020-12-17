@@ -1,30 +1,36 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { ListOfPhotoCardsComponent } from '../Components/ListOfPhotoCards/index';
 import { ThreeHorseLoading } from 'react-loadingg';
 
-import { gql } from 'apollo-boost';
-import { Query } from 'react-apollo';
+const usePhotocardsData = (categoryId) => {
+  const [photos, setPhotocards] = useState([]);
+  const [loading, setLoading] = useState(false);
 
-const query = gql`
-  query getPhotos($categoryId: ID) {
-    photos(categoryId: $categoryId) {
-      id
-      categoryId
-      src
-      likes
-      userId
-      liked
-    }
+  useEffect(() => {
+    setLoading(true);
+    fetch('http://ec2-13-57-245-72.us-west-1.compute.amazonaws.com/photos')
+      .then((res) => res.json())
+      .then((response) => {
+        setPhotocards(response.data);
+        setLoading(false);
+      });
+  }, []);
+
+  if (categoryId !== undefined) {
+    const photosFiltered = photos.filter(
+      (photo) => photo.categoryId.toString() === categoryId.toString(),
+    );
+
+    return { photos: photosFiltered, loading };
   }
-`;
 
-export const ListOfPhotoCards = ({ categoryId }) => (
-  <Query query={query} variables={{ categoryId }}>
-    {({ loading, error, data }) => {
-      if (loading) return <ThreeHorseLoading />;
-      if (error) return <p>Error</p>;
-      const { photos = {} } = data;
-      return <ListOfPhotoCardsComponent photos={photos} />;
-    }}
-  </Query>
-);
+  return { photos, loading };
+};
+
+export const ListOfPhotoCards = ({ categoryId }) => {
+  const { photos, loading } = usePhotocardsData(categoryId);
+
+  if (loading) return <ThreeHorseLoading />;
+
+  return <ListOfPhotoCardsComponent photos={photos} />;
+};

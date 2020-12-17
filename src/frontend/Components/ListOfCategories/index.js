@@ -2,45 +2,42 @@ import React, { useEffect, useState } from 'react';
 import { Category } from '../Category';
 import { List, Item } from './styles';
 
-function useCategoriesData() {
+const useCategoriesData = () => {
   const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(false);
 
-  useEffect(function() {
+  useEffect(() => {
     setLoading(true);
-    fetch('https://petgram-server-cyzd2zjsl.now.sh/categories')
+    fetch('http://ec2-13-57-245-72.us-west-1.compute.amazonaws.com/categories')
       .then((res) => res.json())
       .then((response) => {
-        setCategories(response);
+        setCategories(response.data);
         setLoading(false);
       });
   }, []);
 
   return { categories, loading };
-}
+};
 
 const ListOfCategoriesComponent = () => {
   const [showFixed, setShowFixed] = useState(false);
   const { categories, loading } = useCategoriesData();
 
-  useEffect(
-    function() {
-      const onScroll = (e) => {
-        const newShowFixed = window.scrollY > 200;
-        showFixed !== newShowFixed && setShowFixed(newShowFixed);
-      };
+  useEffect(() => {
+    const onScroll = (e) => {
+      const newShowFixed = window.scrollY > 200;
+      showFixed !== newShowFixed && setShowFixed(newShowFixed);
+    };
 
-      document.addEventListener('scroll', onScroll);
+    document.addEventListener('scroll', onScroll);
 
-      return () => document.removeEventListener('scroll', onScroll);
-    },
-    [showFixed],
-  );
+    return () => document.removeEventListener('scroll', onScroll);
+  }, [showFixed]);
 
   const renderList = (fixed) => (
     <List fixed={fixed}>
       {loading ? (
-        <Item key="loading">
+        <Item key='loading'>
           <Category />
         </Item>
       ) : (
