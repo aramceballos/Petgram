@@ -1,4 +1,6 @@
 import React from 'react';
+import { Alert } from '@material-ui/lab';
+
 import { useInputValue } from '../../hooks/userInputValue';
 import { Form, Input, Title } from './styles';
 import { SubmitButton } from '../SubmitButton';
@@ -17,23 +19,23 @@ export const UserForm = ({ onSubmit, disabled, success, title, error }) => {
       <Title>{title}</Title>
       <Form onSubmit={handleSubmit}>
         <Input
-          type="email"
-          placeholder="Email"
+          type='email'
+          placeholder='Email'
           {...email}
           disabled={disabled}
         />
         <Input
-          type="password"
-          placeholder="Contraseña"
+          type='password'
+          placeholder='Contraseña'
           {...password}
           disabled={disabled}
         />
-        <SubmitButton type="submit" disabled={disabled}>
+        <SubmitButton type='submit' disabled={disabled}>
           {title}
         </SubmitButton>
       </Form>
-      {error && error}
-      {success && success}
+      {error && <Alert severity='error'>{error}</Alert>}
+      {success && <Alert severity='success'>{success}</Alert>}
     </>
   );
 };

@@ -23,9 +23,6 @@ const usePhotocardsData = (categoryId) => {
 
 export const PhotoCardWithQuery = ({ id }) => {
   const { photo, loading } = usePhotocardsData(id);
-  useEffect(() => {
-    console.log('si');
-  }, []);
 
   if (loading) return <ThreeHorseLoading />;
 

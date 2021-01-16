@@ -16,7 +16,7 @@ import Detail from '../pages/Detail';
 import Favs from '../pages/Favs';
 import User from '../pages/User';
 import NotFound from '../pages/NotFound';
-import NotRegisteredUser from '../pages/NotRegisteredUser';
+import Login from '../pages/Login';
 const App = () => {
   const { isAuth } = useContext(Context);
 
@@ -28,7 +28,7 @@ const App = () => {
         <Route exact path='/' component={Home} />
         <Route exact path='/pet/:categoryId' component={Home} />
         <Route exact path='/detail/:detailId' component={Detail} />
-        {!isAuth && <Route exact path='/login' component={NotRegisteredUser} />}
+        {!isAuth && <Route exact path='/login' component={Login} />}
         {!isAuth && <Redirect from='/favs' to='/login' />}
         {!isAuth && <Redirect from='/user' to='/login' />}
         {isAuth && <Redirect from='/login' to='/' />}

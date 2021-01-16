@@ -10,6 +10,10 @@ import { renderRoutes } from 'react-router-config';
 import 'isomorphic-fetch';
 import { ServerStyleSheet } from 'styled-components';
 import helmet from 'helmet';
+import passport from 'passport';
+import boom from '@hapi/boom';
+import cookieParser from 'cookie-parser';
+import axios from 'axios';
 
 import Context from '../frontend/Context';
 import serverRoutes from '../frontend/routes/serverRoutes';
@@ -17,11 +21,19 @@ import GlobalStyle from '../frontend/styles/GlobalStyles';
 import Logo from '../frontend/Components/Logo';
 import NavBar from '../frontend/Components/NavBar';
 
+require('./utils/auth/strategies/basic');
+
 dotenv.config();
 
-const { ENV, PORT } = process.env;
+const { ENV, PORT, API_URL } = process.env;
+
+const THIRTY_DAYS_IN_SEC = 2592000;
+const TWO_HOURS_IN_SEC = 7200;
 
 const app = express();
+
+app.use(express.json());
+app.use(cookieParser());
 
 if (ENV === 'development') {
   console.log('Development config');
@@ -78,21 +90,6 @@ const setResponse = (html, styles) => {
 const renderApp = (req, res) => {
   const client = new ApolloClient({
     uri: 'https://petgram-server-cyzd2zjsl.now.sh/graphql',
-    request: (operation) => {
-      const token = window.sessionStorage.getItem('token');
-      const authorization = token ? `Bearer ${token}` : '';
-      operation.setContext({
-        headers: {
-          authorization,
-        },
-      });
-    },
-    // onError: ({ networkError }) => {
-    //   if (networkError && networkError.result.code === 'invalid_token') {
-    //     window.sessionStorage.removeItem('token');
-    //     window.location.href = '/';
-    //   }
-    // },
   });
 
   const sheet = new ServerStyleSheet();
@@ -117,6 +114,56 @@ const renderApp = (req, res) => {
 };
 
 app.get('*', renderApp);
+
+app.post('/auth/sign-in', async (req, res, next) => {
+  const { rememberMe } = req.body;
+
+  passport.authenticate('basic', (error, data) => {
+    try {
+      if (error || !data) {
+        return next(boom.unauthorized());
+      }
+
+      req.login(data, { session: false }, (error) => {
+        if (error) {
+          return next(error);
+        }
+
+        const { token } = data;
+
+        res.cookie('token', token, {
+          httpOnly: ENV === 'production',
+          secure: ENV === 'production',
+          maxAge: rememberMe ? THIRTY_DAYS_IN_SEC : TWO_HOURS_IN_SEC,
+        });
+
+        if (data) {
+          res.status(200).json(data);
+        } else {
+          return next(boom.unauthorized());
+        }
+      });
+    } catch (error) {
+      next(error);
+    }
+  })(req, res, next);
+});
+
+app.post('/auth/sign-up', async (req, res, next) => {
+  const { body: user } = req;
+
+  try {
+    await axios({
+      url: `${API_URL}/api/auth/sign-up`,
+      method: 'POST',
+      data: user,
+    });
+
+    res.status(201).json({ message: 'user created' });
+  } catch (error) {
+    next(error);
+  }
+});
 
 app.listen(PORT || 3000, (err) => {
   if (err) console.log(err);

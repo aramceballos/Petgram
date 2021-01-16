@@ -12,21 +12,6 @@ const history = createBrowserHistory();
 
 const client = new ApolloClient({
   uri: 'https://petgram-server-cyzd2zjsl.now.sh/graphql',
-  request: (operation) => {
-    const token = window.sessionStorage.getItem('token');
-    const authorization = token ? `Bearer ${token}` : '';
-    operation.setContext({
-      headers: {
-        authorization,
-      },
-    });
-  },
-  // onError: ({ networkError }) => {
-  //   if (networkError && networkError.result.code === 'invalid_token') {
-  //     window.sessionStorage.removeItem('token');
-  //     window.location.href = '/';
-  //   }
-  // },
 });
 
 ReactDOM.hydrate(

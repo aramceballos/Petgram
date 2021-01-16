@@ -3,7 +3,7 @@ import Detail from '../pages/Detail';
 import Favs from '../pages/Favs';
 import User from '../pages/User';
 import NotFound from '../pages/NotFound';
-import NotRegisteredUser from '../pages/NotRegisteredUser';
+import Login from '../pages/Login';
 
 const routes = [
   {
@@ -24,7 +24,7 @@ const routes = [
   {
     exact: true,
     path: '/login',
-    component: NotRegisteredUser,
+    component: Login,
   },
   {
     exact: true,

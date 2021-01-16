@@ -5,22 +5,48 @@ export const Context = createContext();
 const Provider = ({ children }) => {
   const [isAuth, setIsAuth] = useState(() => {
     if (typeof window !== 'undefined') {
-      return window.sessionStorage.getItem('token');
+      const name = 'token=';
+      const decodedCookie = decodeURIComponent(document.cookie);
+      const ca = decodedCookie.split(';');
+      for (let i = 0; i < ca.length; i++) {
+        let c = ca[i];
+        while (c.charAt(0) === ' ') {
+          c = c.substring(1);
+        }
+        if (c.indexOf(name) === 0) {
+          return c.substring(name.length, c.length);
+        }
+      }
+      return '';
+    }
+  });
+  const [name] = useState(() => {
+    if (typeof window !== 'undefined') {
+      const name = 'name=';
+      const decodedCookie = decodeURIComponent(document.cookie);
+      const ca = decodedCookie.split(';');
+      for (let i = 0; i < ca.length; i++) {
+        let c = ca[i];
+        while (c.charAt(0) === ' ') {
+          c = c.substring(1);
+        }
+        if (c.indexOf(name) === 0) {
+          return c.substring(name.length, c.length);
+        }
+      }
+      return '';
     }
   });
 
   const value = {
     isAuth,
-    activateAuth: (token) => {
-      if (typeof window !== 'undefined') {
-        window.sessionStorage.setItem('token', token);
-      }
-      setIsAuth(true);
-    },
+    name,
     removeAuth: () => {
-      if (typeof window !== 'undefined') {
-        window.sessionStorage.removeItem('token');
-      }
+      document.cookie = 'email=';
+      document.cookie = 'name=';
+      document.cookie = 'id=';
+      document.cookie = 'token=';
+      window.location.href = '/login';
       setIsAuth(false);
     },
   };

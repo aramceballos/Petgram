@@ -1,15 +1,13 @@
-import React, { useContext } from 'react';
-import { Context } from '../Context';
+import React from 'react';
 import { UserForm } from '../Components/UserForm';
 import { RegisterMutation } from '../container/RegisterMutation';
 import { LoginMutation } from '../container/LoginMutation';
 import { Alert } from '@material-ui/lab';
 import { Layout } from '../Components/Layout';
 
-export default () => {
-  const { activateAuth } = useContext(Context);
+const NotRegisteredUser = () => {
   return (
-    <Layout title="Login">
+    <Layout title='Login'>
       <RegisterMutation>
         {(register, { data, loading, error }) => {
           const onSubmit = ({ email, password }) => {
@@ -17,12 +15,11 @@ export default () => {
             const variables = { input };
             register({ variables }).then(({ data }) => {
               const { signup } = data;
-              activateAuth(signup);
             });
           };
 
           const errorMsg = error && (
-            <Alert severity="error">
+            <Alert severity='error'>
               El usuario ya existe o ha ocurrido algun error
             </Alert>
           );
@@ -31,7 +28,7 @@ export default () => {
             <UserForm
               disabled={loading}
               error={errorMsg}
-              title="Registrarse"
+              title='Registrarse'
               onSubmit={onSubmit}
             />
           );
@@ -39,25 +36,24 @@ export default () => {
       </RegisterMutation>
 
       <LoginMutation>
-        {(login, { data, loading, error }) => {
+        {(login, { loading, error }) => {
           const onSubmit = ({ email, password }) => {
             const input = { email, password };
             const variables = { input };
             login({ variables }).then(({ data }) => {
               const { login } = data;
-              activateAuth(login);
             });
           };
 
           const errorMsg = error && (
-            <Alert severity="error">Email o Contraseña incorrectos</Alert>
+            <Alert severity='error'>Email o Contraseña incorrectos</Alert>
           );
 
           return (
             <UserForm
               disabled={loading}
               error={errorMsg}
-              title="Iniciar Sesión"
+              title='Iniciar Sesión'
               onSubmit={onSubmit}
             />
           );
@@ -66,3 +62,5 @@ export default () => {
     </Layout>
   );
 };
+
+export default NotRegisteredUser;
