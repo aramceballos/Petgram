@@ -92,7 +92,8 @@ const Login = () => {
         document.cookie = `email=${data.user.email}`;
         document.cookie = `name=${data.user.name}`;
         document.cookie = `id=${data.user.id}`;
-        // document.cookie = `petgramId=${data.token}`;
+      })
+      .then(() => {
         window.location.href = '/';
       })
       .catch(() => {

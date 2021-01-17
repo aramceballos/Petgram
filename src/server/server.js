@@ -27,8 +27,8 @@ dotenv.config();
 
 const { ENV, PORT, API_URL } = process.env;
 
-const THIRTY_DAYS_IN_SEC = 2592000;
-const TWO_HOURS_IN_SEC = 7200;
+const THIRTY_DAYS_IN_SEC = 2592000000;
+const TWO_HOURS_IN_SEC = 7200000;
 
 const app = express();
 
@@ -131,7 +131,7 @@ app.post('/auth/sign-in', async (req, res, next) => {
 
         const { token } = data;
 
-        res.cookie('petgramId', token, {
+        res.cookie('token', token, {
           httpOnly: ENV === 'production',
           secure: ENV === 'production',
           maxAge: rememberMe ? THIRTY_DAYS_IN_SEC : TWO_HOURS_IN_SEC,

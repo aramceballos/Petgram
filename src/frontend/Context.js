@@ -5,7 +5,7 @@ export const Context = createContext();
 const Provider = ({ children }) => {
   const [isAuth, setIsAuth] = useState(() => {
     if (typeof window !== 'undefined') {
-      const name = 'petgramId=';
+      const name = 'token=';
       const decodedCookie = decodeURIComponent(document.cookie);
       const ca = decodedCookie.split(';');
       for (let i = 0; i < ca.length; i++) {
