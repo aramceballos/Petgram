@@ -5,7 +5,7 @@ export const Context = createContext();
 const Provider = ({ children }) => {
   const [isAuth, setIsAuth] = useState(() => {
     if (typeof window !== 'undefined') {
-      const name = 'petgramToken=';
+      const name = 'petgramId=';
       const decodedCookie = decodeURIComponent(document.cookie);
       const ca = decodedCookie.split(';');
       for (let i = 0; i < ca.length; i++) {
@@ -45,7 +45,7 @@ const Provider = ({ children }) => {
       document.cookie = 'email=';
       document.cookie = 'name=';
       document.cookie = 'id=';
-      document.cookie = 'petgramToken=';
+      document.cookie = 'petgramId=';
       window.location.href = '/login';
       setIsAuth(false);
     },

@@ -131,7 +131,7 @@ app.post('/auth/sign-in', async (req, res, next) => {
 
         const { token } = data;
 
-        res.cookie('petgramToken', token, {
+        res.cookie('petgramId', token, {
           httpOnly: ENV === 'production',
           secure: ENV === 'production',
           maxAge: rememberMe ? THIRTY_DAYS_IN_SEC : TWO_HOURS_IN_SEC,
