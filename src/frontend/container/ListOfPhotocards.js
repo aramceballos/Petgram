@@ -8,7 +8,7 @@ const usePhotocardsData = (categoryId) => {
 
   useEffect(() => {
     setLoading(true);
-    fetch('http://ec2-13-57-245-72.us-west-1.compute.amazonaws.com/photos')
+    fetch('https://petgram-rest-api.herokuapp.com/photos')
       .then((res) => res.json())
       .then((response) => {
         setPhotocards(response.data);
