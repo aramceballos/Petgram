@@ -48,15 +48,6 @@ const Button = styled.button`
   }
 `;
 
-const Checkbox = styled.input`
-  margin-top: 10px;
-`;
-
-const Label = styled.label`
-  margin-left: 2px;
-  font-size: 14px;
-`;
-
 const StyledLink = styled(Link)`
   margin-top: 10px;
   text-decoration: none;
@@ -66,74 +57,92 @@ const StyledLink = styled(Link)`
   float: right;
 `;
 
-const Login = () => {
+const SignUp = () => {
+  const [disabled, setDisabled] = useState(true);
   const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState(null);
-  const [rememberMe, setRememberMe] = useState(false);
 
   const email = useInputValue('');
+  const name = useInputValue('');
+  const userName = useInputValue('');
   const password = useInputValue('');
+
+  const handleKeyDown = (ev) => {
+    if (ev.key === 'Enter' && !disabled) {
+      onSubmit();
+    } else {
+      if (
+        email.value.length > 0 &&
+        name.value.length > 0 &&
+        userName.value.length > 0 &&
+        password.value.length > 0
+      ) {
+        setDisabled(false);
+      }
+    }
+  };
 
   const onSubmit = () => {
     setLoading(true);
     axios({
-      url: '/auth/sign-in',
+      url: '/auth/sign-up',
       method: 'POST',
-      auth: {
-        username: email.value,
+      data: {
+        email: email.value,
+        name: name.value,
+        userName: userName.value,
         password: password.value,
       },
-      data: {
-        rememberMe,
-      },
     })
-      .then(({ data }) => {
+      .then(() => {
         setLoading(false);
-        document.cookie = `email=${data.user.email}`;
-        document.cookie = `name=${data.user.name}`;
-        document.cookie = `id=${data.user.id}`;
-        document.cookie = `token=${data.token}`;
-        window.location.href = '/';
+        window.location.href = '/login';
       })
       .catch(() => {
-        setErrorMessage('Incorrect email or password');
         setLoading(false);
       });
   };
 
   return (
     <>
-      <Title>Log in</Title>
+      <Title>Sign up</Title>
       <FormContainer>
         <Input
           type='email'
           placeholder='Email'
           {...email}
           disabled={loading}
-          onKeyDown={(ev) => ev.key === 'Enter' && onSubmit()}
+          onKeyDown={handleKeyDown}
+        />
+        <Input
+          type='name'
+          placeholder='Full Name'
+          {...name}
+          disabled={loading}
+          onKeyDown={handleKeyDown}
+        />
+        <Input
+          type='userName'
+          placeholder='Username'
+          {...userName}
+          disabled={loading}
+          onKeyDown={handleKeyDown}
         />
         <Input
           type='password'
           placeholder='Password'
           {...password}
           disabled={loading}
-          onKeyDown={(ev) => ev.key === 'Enter' && onSubmit()}
+          onKeyDown={handleKeyDown}
         />
-        <Button onClick={onSubmit} disabled={loading}>
-          Log In
+        <Button onClick={onSubmit} disabled={loading || disabled}>
+          Sign up
         </Button>
-        <Checkbox
-          onChange={() => setRememberMe(!rememberMe)}
-          checked={rememberMe}
-          type='checkbox'
-          id='remember'
-        />
-        <Label htmlFor='remember'>Remember me</Label>
-        <StyledLink to='/signup'>Sign up</StyledLink>
+        <StyledLink to='/login'>Log In</StyledLink>
       </FormContainer>
       {errorMessage && <Alert severity='error'>{errorMessage}</Alert>}
     </>
   );
 };
 
-export default Login;
+export default SignUp;

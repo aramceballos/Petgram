@@ -7,7 +7,7 @@ export const Nav = styled.nav`
   border-top: 1px solid #e0e0e0;
   bottom: 0;
   display: flex;
-  height: 50px;
+  height: calc(50px + env(safe-area-inset-bottom));
   justify-content: space-around;
   left: 0;
   margin: 0 auto;
@@ -16,6 +16,7 @@ export const Nav = styled.nav`
   right: 0;
   width: 100%;
   z-index: 1000;
+  padding-bottom: env(safe-area-inset-bottom);
 `;
 
 export const Link = styled(LinkRouter)`

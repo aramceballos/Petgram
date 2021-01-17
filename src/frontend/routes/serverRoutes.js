@@ -4,6 +4,7 @@ import Favs from '../pages/Favs';
 import User from '../pages/User';
 import NotFound from '../pages/NotFound';
 import Login from '../pages/Login';
+import SignUp from '../pages/SignUp';
 
 const routes = [
   {
@@ -25,6 +26,11 @@ const routes = [
     exact: true,
     path: '/login',
     component: Login,
+  },
+  {
+    exact: true,
+    path: '/signup',
+    component: SignUp,
   },
   {
     exact: true,

@@ -17,6 +17,7 @@ import Favs from '../pages/Favs';
 import User from '../pages/User';
 import NotFound from '../pages/NotFound';
 import Login from '../pages/Login';
+import SignUp from '../pages/SignUp';
 const App = () => {
   const { isAuth } = useContext(Context);
 
@@ -29,6 +30,7 @@ const App = () => {
         <Route exact path='/pet/:categoryId' component={Home} />
         <Route exact path='/detail/:detailId' component={Detail} />
         {!isAuth && <Route exact path='/login' component={Login} />}
+        {!isAuth && <Route exact path='/signup' component={SignUp} />}
         {!isAuth && <Redirect from='/favs' to='/login' />}
         {!isAuth && <Redirect from='/user' to='/login' />}
         {isAuth && <Redirect from='/login' to='/' />}
