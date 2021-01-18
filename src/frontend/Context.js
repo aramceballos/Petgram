@@ -1,9 +1,25 @@
-import React, { createContext, useState, useEffect } from 'react';
+import React, { createContext, useState } from 'react';
 
 export const Context = createContext();
 
-const Provider = ({ children, isLogged }) => {
-  const [isAuth, setIsAuth] = useState(false);
+const Provider = ({ children }) => {
+  const [isAuth, setIsAuth] = useState(() => {
+    if (typeof window !== 'undefined') {
+      const name = 'id=';
+      const decodedCookie = decodeURIComponent(document.cookie);
+      const ca = decodedCookie.split(';');
+      for (let i = 0; i < ca.length; i++) {
+        let c = ca[i];
+        while (c.charAt(0) === ' ') {
+          c = c.substring(1);
+        }
+        if (c.indexOf(name) === 0) {
+          return c.substring(name.length, c.length);
+        }
+      }
+      return '';
+    }
+  });
   const [name] = useState(() => {
     if (typeof window !== 'undefined') {
       const name = 'name=';
@@ -21,30 +37,6 @@ const Provider = ({ children, isLogged }) => {
       return '';
     }
   });
-
-  useEffect(() => {
-    if (typeof window !== 'undefined' && !isLogged) {
-      const name = 'token=';
-      const decodedCookie = decodeURIComponent(document.cookie);
-      const ca = decodedCookie.split(';');
-      for (let i = 0; i < ca.length; i++) {
-        let c = ca[i];
-        while (c.charAt(0) === ' ') {
-          c = c.substring(1);
-        }
-        if (c.indexOf(name) === 0) {
-          c = c.substring(name.length, c.length);
-          if (c.length > 0) {
-            setIsAuth(true);
-            return;
-          }
-        }
-      }
-      setIsAuth(false);
-    } else if (isLogged) {
-      setIsAuth(true);
-    }
-  }, []);
 
   const value = {
     isAuth,
