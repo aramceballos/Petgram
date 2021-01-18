@@ -45,7 +45,7 @@ const Provider = ({ children }) => {
       document.cookie = 'email=';
       document.cookie = 'name=';
       document.cookie = 'id=';
-      document.cookie = 'petgramId=';
+      document.cookie = 'token=';
       window.location.href = '/login';
       setIsAuth(false);
     },
