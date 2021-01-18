@@ -96,7 +96,8 @@ const renderApp = (req, res) => {
 
   const html = renderToString(
     sheet.collectStyles(
-      <Context.Provider isLogged={req.cookies.token.length > 0}>
+      <Context.Provider
+        isLogged={req.cookies.token && req.cookies.token.length > 0}>
         <ApolloProvider client={client}>
           <StaticRouter location={req.url} context={{}}>
             <Logo />

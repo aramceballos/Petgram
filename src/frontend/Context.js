@@ -34,7 +34,6 @@ const Provider = ({ children, isLogged }) => {
         }
         if (c.indexOf(name) === 0) {
           c = c.substring(name.length, c.length);
-          console.log(c.length > 0);
           if (c.length > 0) {
             setIsAuth(true);
             return;
