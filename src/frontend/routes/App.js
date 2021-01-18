@@ -34,6 +34,7 @@ const App = () => {
         {!isAuth && <Redirect from='/favs' to='/login' />}
         {!isAuth && <Redirect from='/user' to='/login' />}
         {isAuth && <Redirect from='/login' to='/' />}
+        {isAuth && <Redirect from='/signup' to='/' />}
         <Route exact path='/favs' component={Favs} />
         <Route exact path='/user' component={User} />
         <Route component={NotFound} />
