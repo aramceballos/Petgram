@@ -2,7 +2,7 @@ import React, { createContext, useState, useEffect } from 'react';
 
 export const Context = createContext();
 
-const Provider = ({ children }) => {
+const Provider = ({ children, isLogged }) => {
   const [isAuth, setIsAuth] = useState(false);
   const [name] = useState(() => {
     if (typeof window !== 'undefined') {
@@ -23,7 +23,7 @@ const Provider = ({ children }) => {
   });
 
   useEffect(() => {
-    if (typeof window !== 'undefined') {
+    if (typeof window !== 'undefined' && !isLogged) {
       const name = 'token=';
       const decodedCookie = decodeURIComponent(document.cookie);
       const ca = decodedCookie.split(';');
@@ -33,11 +33,17 @@ const Provider = ({ children }) => {
           c = c.substring(1);
         }
         if (c.indexOf(name) === 0) {
-          setIsAuth(true);
-          return;
+          c = c.substring(name.length, c.length);
+          console.log(c.length > 0);
+          if (c.length > 0) {
+            setIsAuth(true);
+            return;
+          }
         }
       }
       setIsAuth(false);
+    } else if (isLogged) {
+      setIsAuth(true);
     }
   }, []);
 
