@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
-import axios from 'axios';
+import { connect } from 'react-redux';
 import styled from 'styled-components';
 import { Alert } from '@material-ui/lab';
 import { Link } from 'react-router-dom';
 
 import { useInputValue } from '../hooks/userInputValue';
+import { registerUser } from '../actions';
 
 const FormContainer = styled.div`
   padding: 14px 15px;
@@ -57,7 +58,7 @@ const StyledLink = styled(Link)`
   float: right;
 `;
 
-const SignUp = () => {
+const SignUp = (props) => {
   const [disabled, setDisabled] = useState(true);
   const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState(null);
@@ -83,24 +84,15 @@ const SignUp = () => {
   };
 
   const onSubmit = () => {
-    setLoading(true);
-    axios({
-      url: '/auth/sign-up',
-      method: 'POST',
-      data: {
+    props.registerUser(
+      {
         email: email.value,
         name: name.value,
         userName: userName.value,
         password: password.value,
       },
-    })
-      .then(() => {
-        setLoading(false);
-        window.location.href = '/login';
-      })
-      .catch(() => {
-        setLoading(false);
-      });
+      '/login',
+    );
   };
 
   return (
@@ -145,4 +137,8 @@ const SignUp = () => {
   );
 };
 
-export default SignUp;
+const mapDispatchToProps = {
+  registerUser,
+};
+
+export default connect(null, mapDispatchToProps)(SignUp);

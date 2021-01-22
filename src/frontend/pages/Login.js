@@ -3,7 +3,9 @@ import axios from 'axios';
 import styled from 'styled-components';
 import { Alert } from '@material-ui/lab';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
 
+import { loginUser } from '../actions';
 import { useInputValue } from '../hooks/userInputValue';
 
 const FormContainer = styled.div`
@@ -66,7 +68,7 @@ const StyledLink = styled(Link)`
   float: right;
 `;
 
-const Login = () => {
+const Login = (props) => {
   const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState(null);
   const [rememberMe, setRememberMe] = useState(false);
@@ -75,31 +77,7 @@ const Login = () => {
   const password = useInputValue('');
 
   const onSubmit = () => {
-    setLoading(true);
-    axios({
-      url: '/auth/sign-in',
-      method: 'POST',
-      auth: {
-        username: email.value,
-        password: password.value,
-      },
-      data: {
-        rememberMe,
-      },
-    })
-      .then(({ data }) => {
-        setLoading(false);
-        document.cookie = `email=${data.user.email}`;
-        document.cookie = `name=${data.user.name}`;
-        document.cookie = `id=${data.user.id}`;
-      })
-      .then(() => {
-        window.location.href = '/';
-      })
-      .catch(() => {
-        setErrorMessage('Incorrect email or password');
-        setLoading(false);
-      });
+    props.loginUser({ email: email.value, password: password.value }, '/');
   };
 
   return (
@@ -137,4 +115,8 @@ const Login = () => {
   );
 };
 
-export default Login;
+const mapDispatchToProps = {
+  loginUser,
+};
+
+export default connect(null, mapDispatchToProps)(Login);

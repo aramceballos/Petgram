@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import {
   BrowserRouter as Router,
   Redirect,
@@ -9,7 +9,6 @@ import {
 import GlobalStyles from '../styles/GlobalStyles';
 import Logo from '../Components/Logo';
 import NavBar from '../Components/NavBar';
-import { Context } from '../Context';
 
 import Home from '../pages/Home';
 import Detail from '../pages/Detail';
@@ -18,9 +17,8 @@ import User from '../pages/User';
 import NotFound from '../pages/NotFound';
 import Login from '../pages/Login';
 import SignUp from '../pages/SignUp';
-const App = () => {
-  const { isAuth } = useContext(Context);
 
+const App = ({ isAuth }) => {
   return (
     <Router>
       <Logo />

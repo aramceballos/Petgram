@@ -3,19 +3,19 @@ import dotenv from 'dotenv';
 import webpack from 'webpack';
 import React from 'react';
 import { renderToString } from 'react-dom/server';
-import ApolloClient from 'apollo-boost';
+import { Provider } from 'react-redux';
+import { createStore } from 'redux';
 import { ApolloProvider } from 'react-apollo';
 import { StaticRouter } from 'react-router-dom';
 import { renderRoutes } from 'react-router-config';
-import 'isomorphic-fetch';
+import axios from 'axios';
 import { ServerStyleSheet } from 'styled-components';
 import helmet from 'helmet';
 import passport from 'passport';
 import boom from '@hapi/boom';
 import cookieParser from 'cookie-parser';
-import axios from 'axios';
 
-import Context from '../frontend/Context';
+import reducer from '../frontend/reducers';
 import serverRoutes from '../frontend/routes/serverRoutes';
 import GlobalStyle from '../frontend/styles/GlobalStyles';
 import Logo from '../frontend/Components/Logo';
@@ -52,7 +52,7 @@ if (ENV === 'development') {
   app.use(helmet.permittedCrossDomainPolicies());
 }
 
-const setResponse = (html, styles) => {
+const setResponse = (html, preloadedState, styles) => {
   return `
         <!DOCTYPE html>
         <html lang="en">
@@ -65,6 +65,11 @@ const setResponse = (html, styles) => {
             </head>
             <body>
                 <div id="app">${html}</div>
+                <script>
+                window.__PRELOADED_STATE__ = ${JSON.stringify(
+                  preloadedState,
+                ).replace(/</g, '\\u003c')} 
+                </script>
                 <script src="assets/app.js" type="text/javascript"></script>
                 <script>
                     if ('serviceWorker' in navigator) {
@@ -88,30 +93,65 @@ const setResponse = (html, styles) => {
 };
 
 const renderApp = (req, res) => {
-  const client = new ApolloClient({
-    uri: 'https://petgram-server-cyzd2zjsl.now.sh/graphql',
-  });
+  let initialState;
+
+  const { token, id, name, email } = req.cookies;
+
+  if (token) {
+    try {
+      initialState = {
+        ...initialState,
+        user: {
+          id,
+          name,
+          email,
+        },
+        token: token,
+      };
+    } catch (error) {
+      initialState = {
+        ...initialState,
+      };
+    }
+  } else {
+    try {
+      initialState = {
+        ...initialState,
+        user: {
+          id: '',
+          name: '',
+          email: '',
+        },
+        token: token,
+      };
+    } catch (error) {
+      initialState = {
+        ...initialState,
+      };
+    }
+  }
 
   const sheet = new ServerStyleSheet();
 
+  const store = createStore(reducer, initialState);
+  // const isAuth = initialState.token;
+  const preloadedState = store.getState();
+
   const html = renderToString(
     sheet.collectStyles(
-      <Context.Provider
-        isLogged={req.cookies.token && req.cookies.token.length > 0}>
-        <ApolloProvider client={client}>
-          <StaticRouter location={req.url} context={{}}>
-            <Logo />
-            <GlobalStyle />
-            {renderRoutes(serverRoutes)}
-            <NavBar />
-          </StaticRouter>
-        </ApolloProvider>
-      </Context.Provider>,
+      <Provider store={store}>
+        <StaticRouter location={req.url} context={{}}>
+          <Logo />
+          <GlobalStyle />
+          {renderRoutes(serverRoutes)}
+          <NavBar />
+        </StaticRouter>
+      </Provider>,
     ),
   );
   const styles = sheet.getStyleTags();
 
-  res.send(setResponse(html, styles));
+  res.send(setResponse(html, preloadedState, styles));
 };
 
 app.get('*', renderApp);

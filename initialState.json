@@ -1,0 +1,6 @@
+{
+  "initialState": {
+    "isAuth": false,
+    "name": ""
+  }
+}

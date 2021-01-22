@@ -2,7 +2,7 @@ import React, { createContext, useState } from 'react';
 
 export const Context = createContext();
 
-const Provider = ({ children }) => {
+const Provider = ({ children, isLogged }) => {
   const [isAuth, setIsAuth] = useState(() => {
     if (typeof window !== 'undefined') {
       const name = 'id=';
@@ -37,6 +37,8 @@ const Provider = ({ children }) => {
       return '';
     }
   });
+
+  console.log(isLogged);
 
   const value = {
     isAuth,
