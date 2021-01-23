@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from 'react';
+import Skeleton from '@material-ui/lab/Skeleton';
+
 import { Category } from '../Category';
 import { List, Item } from './styles';
 
@@ -37,9 +39,40 @@ const ListOfCategoriesComponent = () => {
   const renderList = (fixed) => (
     <List fixed={fixed}>
       {loading ? (
-        <Item key='loading'>
-          <Category />
-        </Item>
+        <>
+          <Item>
+            <Skeleton
+              style={{ marginBottom: '25px' }}
+              variant='circle'
+              width={75}
+              height={75}
+            />
+          </Item>
+          <Item>
+            <Skeleton
+              style={{ marginBottom: '25px' }}
+              variant='circle'
+              width={75}
+              height={75}
+            />
+          </Item>
+          <Item>
+            <Skeleton
+              style={{ marginBottom: '25px' }}
+              variant='circle'
+              width={75}
+              height={75}
+            />
+          </Item>
+          <Item>
+            <Skeleton
+              style={{ marginBottom: '25px' }}
+              variant='circle'
+              width={75}
+              height={75}
+            />
+          </Item>
+        </>
       ) : (
         categories.map((category) => (
           <Item key={category.id}>
@@ -49,10 +82,6 @@ const ListOfCategoriesComponent = () => {
       )}
     </List>
   );
-
-  if (loading) {
-    return <p>Loading...</p>;
-  }
 
   return (
     <>
