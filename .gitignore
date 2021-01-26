@@ -6,3 +6,4 @@ CNAME
 .DS_Store
 src/server/public
 .env
+docker-compose.override.yml

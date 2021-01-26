@@ -1,0 +1,7 @@
+version: "3.9"
+
+services:
+  app:
+    image: petgram
+    ports:
+      - "3000:3001"
