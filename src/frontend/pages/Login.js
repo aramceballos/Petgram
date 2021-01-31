@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import axios from 'axios';
 import styled from 'styled-components';
 import { Alert } from '@material-ui/lab';
 import { Link } from 'react-router-dom';
@@ -69,8 +68,8 @@ const StyledLink = styled(Link)`
 `;
 
 const Login = (props) => {
-  const [loading, setLoading] = useState(false);
-  const [errorMessage, setErrorMessage] = useState(null);
+  const [loading] = useState(false);
+  const [errorMessage] = useState(null);
   const [rememberMe, setRememberMe] = useState(false);
 
   const email = useInputValue('');

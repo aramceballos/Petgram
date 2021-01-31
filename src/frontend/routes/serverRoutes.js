@@ -6,21 +6,21 @@ import NotFound from '../pages/NotFound';
 import Login from '../pages/Login';
 import SignUp from '../pages/SignUp';
 
-const routes = [
+const routes = (isAuth) => [
   {
     exact: true,
     path: '/',
-    component: Home,
+    component: isAuth ? Home : Login,
   },
   {
     exact: true,
     path: '/pet/:categoryId',
-    component: Home,
+    component: isAuth ? Home : Login,
   },
   {
     exact: true,
     path: '/detail/:detailId',
-    component: Detail,
+    component: isAuth ? Detail : Login,
   },
   {
     exact: true,
@@ -35,12 +35,12 @@ const routes = [
   {
     exact: true,
     path: '/favs',
-    component: Favs,
+    component: isAuth ? Favs : Login,
   },
   {
     exact: true,
     path: '/user',
-    component: User,
+    component: isAuth ? User : Login,
   },
   {
     name: 'NotFound',

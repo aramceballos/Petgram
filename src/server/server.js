@@ -102,9 +102,9 @@ const renderApp = (req, res) => {
       initialState = {
         ...initialState,
         user: {
-          id,
-          name,
-          email,
+          id: id,
+          name: name,
+          email: email,
         },
         token: token,
       };
@@ -134,7 +134,7 @@ const renderApp = (req, res) => {
   const sheet = new ServerStyleSheet();
 
   const store = createStore(reducer, initialState);
-  // const isAuth = initialState.token;
+  const isAuth = initialState.token;
   const preloadedState = store.getState();
 
   const html = renderToString(
@@ -143,7 +143,7 @@ const renderApp = (req, res) => {
         <StaticRouter location={req.url} context={{}}>
           <Logo />
           <GlobalStyle />
-          {renderRoutes(serverRoutes)}
+          {renderRoutes(serverRoutes(isAuth))}
           <NavBar />
         </StaticRouter>
       </Provider>,

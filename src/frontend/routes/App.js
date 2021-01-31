@@ -24,17 +24,21 @@ const App = ({ isAuth }) => {
       <Logo />
       <GlobalStyles />
       <Switch>
-        <Route exact path='/' component={Home} />
-        <Route exact path='/pet/:categoryId' component={Home} />
-        <Route exact path='/detail/:detailId' component={Detail} />
-        {!isAuth && <Route exact path='/login' component={Login} />}
-        {!isAuth && <Route exact path='/signup' component={SignUp} />}
-        {!isAuth && <Redirect from='/favs' to='/login' />}
-        {!isAuth && <Redirect from='/user' to='/login' />}
-        {isAuth && <Redirect from='/login' to='/' />}
-        {isAuth && <Redirect from='/signup' to='/' />}
-        <Route exact path='/favs' component={Favs} />
-        <Route exact path='/user' component={User} />
+        <Route exact path='/' component={isAuth ? Home : Login} />
+        <Route
+          exact
+          path='/pet/:categoryId'
+          component={isAuth ? Home : Login}
+        />
+        <Route
+          exact
+          path='/detail/:detailId'
+          component={isAuth ? Detail : Login}
+        />
+        <Route exact path='/favs' component={isAuth ? Favs : Login} />
+        <Route exact path='/user' component={isAuth ? User : Login} />
+        <Route exact path='/login' component={Login} />
+        <Route exact path='/signup' component={SignUp} />
         <Route component={NotFound} />
       </Switch>
       <NavBar />
